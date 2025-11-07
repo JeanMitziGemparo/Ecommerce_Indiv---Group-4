@@ -14,15 +14,11 @@ $email = trim((string)($data['email'] ?? ''));
 $contact = trim((string)($data['contact'] ?? ''));
 $password = (string)($data['password'] ?? '');
 
-// No username field in schema; email is the unique identifier
-
 if ($first === '' || $last === '' || $email === '' || $password === '') {
     json_response(['error' => 'Missing required fields'], 422);
 }
 
 $pdo = get_pdo();
-
-// Enforce unique email
 $exists = $pdo->prepare('SELECT 1 FROM users WHERE email = :email LIMIT 1');
 $exists->execute([':email' => $email]);
 if ($exists->fetch()) {

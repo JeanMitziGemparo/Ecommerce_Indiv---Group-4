@@ -1,8 +1,6 @@
 <?php
 require __DIR__ . '/db.php';
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/../includes/session.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     json_response(['error' => 'Method not allowed'], 405);

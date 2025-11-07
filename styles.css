@@ -59,7 +59,7 @@ a.disabled, a[aria-disabled="true"] { opacity: 0.65; }
 
 .card.h-100 .card-actions { margin-top: auto; display: flex; flex-direction: column; gap: .5rem; }
 
-/* Minimal/elegant product card tweaks */
+/* product card tweaks */
 .card.h-100 { border: 1px solid rgba(0,0,0,0.06); border-radius: 10px; box-shadow: 0 6px 18px rgba(13, 38, 59, 0.03); transition: transform 160ms ease, box-shadow 160ms ease; }
 .card.h-100:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(13,38,59,0.06); }
 .card.h-100 .card-img-top { border-top-left-radius: 10px; border-top-right-radius: 10px; height: 200px; object-fit: cover; }
@@ -68,7 +68,7 @@ a.disabled, a[aria-disabled="true"] { opacity: 0.65; }
 .card .btn { border-radius: 8px; }
 .buy-now { background: linear-gradient(90deg,#28a745,#1f8a3e); border: none; }
 
-/* Hero / header background (change color here) */
+/* Hero / header background */
 .site-hero {
 	background-color: #06131a; 
 	background-size: cover;
@@ -88,7 +88,7 @@ a.disabled, a[aria-disabled="true"] { opacity: 0.65; }
 	--hero-text-color: rgb(255, 238, 0);
 	--footer-text-color: rgb(255, 238, 0);
 
-	/* Sizes (adjust for scale) */
+	/* Sizes*/
 	--nav-brand-size: 1.05rem;
 	--hero-heading-size: 3.25rem;
 	--hero-lead-size: 1.25rem;
@@ -100,7 +100,7 @@ a.disabled, a[aria-disabled="true"] { opacity: 0.65; }
 	--product-lead-size: 1.25rem;
 }
 
-/* Apply site font and base color */
+/*  site font and base color */
 body { font-family: var(--site-font); color: var(--text-color); }
 
 /* Navbar branding */
@@ -129,12 +129,12 @@ body { font-family: var(--site-font); color: var(--text-color); }
 /* Footer */
 footer { color: var(--footer-text-color); }
 
-/* Helper: muted color variable */
+/* Helper */
 .muted { color: var(--muted-color); }
 
 
-/* Modal: pop animation and blurred backdrop */
-/* Backdrop blur (works in modern browsers) */
+/* Modal */
+/* Backdrop blur */
 .modal-backdrop.show {
 	background-color: rgba(0, 0, 0, 0.45) !important; 
 	-webkit-backdrop-filter: blur(10px);
@@ -163,11 +163,10 @@ footer { color: var(--footer-text-color); }
 /* Login modal small UI tweaks */
 .modal .modal-body { padding-top: 0.6rem; padding-bottom: 0.6rem; }
 .modal .modal-footer { padding-top: 0.5rem; padding-bottom: 0.75rem; }
-/* Subdued helper for small footer notes (signup link).
-	Use a more specific selector and !important to ensure it overrides Bootstrap link styles. */
+/* Subdued helper for small footer notes (signup link). */
 .modal .modal-footer .modal-note { color: #6c757d !important; opacity: 0.5 !important; text-decoration: none; }
 
-/* Respect reduced motion preference */
+/* reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
 	.modal.fade .modal-dialog,
 	.modal.show .modal-dialog { transition: none; }

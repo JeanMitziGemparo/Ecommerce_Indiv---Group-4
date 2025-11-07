@@ -10,7 +10,7 @@
 </head>
 <body>
 
-  <?php include 'header.php'; ?>
+  <?php include __DIR__ . '/includes/header.php'; ?>
 
   <section class="container py-5">
     <h2 class="text-center mb-4">Contact Us</h2>

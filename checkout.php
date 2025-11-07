@@ -1,5 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) { session_start(); }
+require_once __DIR__ . '/includes/session.php';
 if (empty($_SESSION['authenticated']) || empty($_SESSION['user'])) {
   header('Location: index.php?loginRequired=1');
   exit;
@@ -15,13 +15,12 @@ if (empty($_SESSION['authenticated']) || empty($_SESSION['user'])) {
     </head>
     <body>
 
-        <?php include 'header.php'; ?>
+        <?php include __DIR__ . '/includes/header.php'; ?>
 
     <main class="container py-5 content-with-footer">
             <h2 class="mb-4">Checkout</h2>
 
             <div class="row">
-                <!-- Items column (rendered from cart state) -->
                 <div class="col-lg-8 mb-4">
                     <div class="card">
                         <div class="card-body">
@@ -29,14 +28,12 @@ if (empty($_SESSION['authenticated']) || empty($_SESSION['user'])) {
                             <p class="text-muted">Review the items you'll purchase. Quantities are editable.</p>
 
                             <div id="checkoutItems" class="list-group">
-                                <!-- rendered by javascript -->
                             </div>
 
                         </div>
                     </div>
                 </div>
 
-                <!-- Summary column (values injected by JS) -->
                 <div class="col-lg-4">
                     <div class="card card-summary mb-3">
                         <div class="card-body">
@@ -111,12 +108,11 @@ if (empty($_SESSION['authenticated']) || empty($_SESSION['user'])) {
 
         </main>
 
-        <?php include 'footer.php'; ?>
+        <?php include __DIR__ . '/includes/footer.php'; ?>
 
-                <!-- Bootstrap JS for modal support -->
+                <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
-                <!-- Order success modal -->
                 <div class="modal fade" id="orderSuccessModal" tabindex="-1" aria-labelledby="orderSuccessModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-sm modal-dialog-centered">
                         <div class="modal-content text-center p-3">

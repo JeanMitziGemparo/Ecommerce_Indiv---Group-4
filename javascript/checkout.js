@@ -1,4 +1,3 @@
-// Checkout page script: renders cart items, updates quantities, and places order. (jQuery)
 (function($){
   'use strict';
 
@@ -55,14 +54,12 @@
 
     $subtotalEl.text(formatPrice(subtotal));
 
-    // compute shipping from selected option if present
     var $shippingOption = $('#shippingOption');
     var shippingFee = 0;
     if ($shippingOption.length){ shippingFee = Number($shippingOption.find('option:selected').data('fee') || 0) || 0; }
     $('#shippingFee').text(formatPrice(shippingFee));
     $totalEl.text(formatPrice(subtotal + shippingFee));
 
-    // attach handlers
     $itemsEl.find('.qty-input').off('change').on('change', function(){
       var i = Number($(this).data('idx'));
       var val = Math.max(1, Number($(this).val())||1);
@@ -80,16 +77,13 @@
       render();
     });
 
-    // when shipping option changes, re-render totals
     $shippingOption.off('change').on('change', function(){ render(); });
   }
 
-  // Place order: try POST to /api/checkout, fallback to localStorage 'nethshop_orders'
   function placeOrder(){
     var cart = readCart();
     if (!cart.length){ if (window.Toast && window.Toast.show) { window.Toast.show('Your cart is empty.'); } else try{ alert('Your cart is empty.'); }catch(e){} return; }
 
-    // collect UI fields
     var address = ($('#shippingAddress').val() || '');
     var $shippingOption = $('#shippingOption');
     var shippingOption = $shippingOption.length ? $shippingOption.val() : 'standard';
@@ -112,14 +106,12 @@
       createdAt: new Date().toISOString()
     };
 
-    // try to POST using jQuery.ajax
     $.ajax({
       url: '/api/checkout',
       method: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(payload)
     }).done(function(data){
-      // success: clear cart and show confirmation modal (with order id if provided)
       writeCart([]);
       var orderId = data && data.orderId ? data.orderId : null;
       $('#orderSuccessOrderId').text(orderId ? ('Order ID: ' + orderId) : '');
@@ -134,7 +126,6 @@
         setTimeout(function(){ window.location.href = 'index.php'; }, 1200);
       } else try{ alert('Order placed successfully (demo).'); window.location.href = 'index.php'; }catch(e){ window.location.href='index.php'; }
     }).fail(function(){
-      // fallback: save to localStorage orders
       var orders = JSON.parse(localStorage.getItem('nethshop_orders')||'[]');
       orders.push(payload);
       localStorage.setItem('nethshop_orders', JSON.stringify(orders));

@@ -1,9 +1,7 @@
 <?php
-// Simple PDO connection helper for the 'eshop' database
-// Adjust credentials if you changed XAMPP defaults
 
 $DB_HOST = '127.0.0.1';
-$DB_PORT = '3306';
+$DB_PORT = '3307';
 $DB_NAME = 'eshop';
 $DB_USER = 'root';
 $DB_PASS = 'jeanmitzi';
@@ -27,18 +25,15 @@ function get_pdo(){
         PDO::ATTR_EMULATE_PREPARES => false,
     ];
 
-    // Try primary credentials
     try {
         $pdo = new PDO($dsn, $user, $pass, $options);
         return $pdo;
     } catch (Throwable $e) {
-        // Fallbacks for typical XAMPP setups: blank password and/or localhost
         if ($user === 'root') {
             try {
                 $pdo = new PDO($dsn, $user, '', $options);
                 return $pdo;
             } catch (Throwable $e2) {
-                // try localhost host fallback
                 $dsn2 = 'mysql:host=localhost;port=' . $port . ';dbname=' . $name . ';charset=utf8mb4';
                 $pdo = new PDO($dsn2, $user, '', $options);
                 return $pdo;

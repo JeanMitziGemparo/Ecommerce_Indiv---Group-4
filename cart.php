@@ -1,5 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) { session_start(); }
+require_once __DIR__ . '/includes/session.php';
 if (empty($_SESSION['authenticated']) || empty($_SESSION['user'])) {
   header('Location: index.php?loginRequired=1');
   exit;
@@ -16,7 +16,7 @@ if (empty($_SESSION['authenticated']) || empty($_SESSION['user'])) {
 <body>
 
   <!-- Navbar -->
-  <?php include 'header.php'; ?>
+  <?php include __DIR__ . '/includes/header.php'; ?>
 
   <!-- Cart content -->
   <main class="container py-5 content-with-footer">
@@ -30,7 +30,6 @@ if (empty($_SESSION['authenticated']) || empty($_SESSION['user'])) {
             <p class="text-muted">Review your items.</p>
 
             <div id="cartItems" class="list-group">
-              <!-- cart items render here by javascript -->
             </div>
 
             <div class="d-flex justify-content-start align-items-center mt-4">
@@ -47,7 +46,6 @@ if (empty($_SESSION['authenticated']) || empty($_SESSION['user'])) {
           <div class="card-body">
             <h5 class="card-title">Order Summary</h5>
             <ul id="summaryList" class="list-unstyled mb-3">
-              <!-- summary lines injected by javascript -->
             </ul>
             <div class="d-flex justify-content-between mb-2">
               <span>Subtotal</span>
@@ -71,22 +69,18 @@ if (empty($_SESSION['authenticated']) || empty($_SESSION['user'])) {
     </div>
   </main>
 
-  <?php include 'footer.php'; ?>
+  <?php include __DIR__ . '/includes/footer.php'; ?>
 
-  <!-- Bootstrap JS (for possible modal/tooltips) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
   <script>
-    // wire continue shopping to go back when possible
     (function(){
       var btn = document.getElementById('continueShoppingBtn');
       if (!btn) return;
       btn.addEventListener('click', function(e){
-        // prefer history back so user returns to previous listing
         if (window.history && window.history.length > 1) { e.preventDefault(); window.history.back(); }
       });
-
-      // block navigation on disabled checkout (extra safety)
       var checkout = document.getElementById('checkoutSummaryBtn');
       if (checkout) {
         checkout.addEventListener('click', function(e){ if (checkout.classList.contains('disabled') || checkout.getAttribute('aria-disabled') === 'true') { e.preventDefault(); if (window.Toast && window.Toast.show) window.Toast.show('Your cart is empty.'); else try{ alert('Your cart is empty.'); }catch(e){} } });

@@ -1,4 +1,3 @@
-// Simple cart manager using localStorage. Exposes addToCart(product) and renders cart in #cartItems (jQuery)
 (function($){
   'use strict';
   var STORAGE_KEY = 'nethshop_cart_v1';
@@ -42,7 +41,6 @@
       $container.append($el);
     });
 
-    // attach handlers
     $container.find('.qty-input').off('change').on('change', function(){
       var i = Number($(this).data('idx'));
       var val = Math.max(1, Number($(this).val())||1);
@@ -61,7 +59,6 @@
       render();
     });
 
-    // update order summary (inject into #summaryList, #cartSubtotal, #cartTotal)
     var total = 0;
     var $list = $('#summaryList');
     if ($list.length) $list.empty();
@@ -75,7 +72,6 @@
     var $subtotalEl = $('#cartSubtotal'); if ($subtotalEl.length) $subtotalEl.text(formatPrice(total));
     var $totalEl = $('#cartTotal'); if ($totalEl.length) $totalEl.text(formatPrice(total));
 
-    // enable/disable checkout button
     var $checkoutBtn = $('#checkoutSummaryBtn');
     if ($checkoutBtn.length) {
       if (total <= 0) { 
@@ -86,11 +82,22 @@
     }
   }
 
-  // Public API
   window.Cart = {
     addToCart: function(product){
+      if (!window.IS_AUTH) {
+        var modalEl = document.getElementById('loginModal');
+        if (modalEl && window.bootstrap) { window.bootstrap.Modal.getOrCreateInstance(modalEl).show(); }
+        else {
+          var base = (function(){
+            if (window.BASE_PATH) return window.BASE_PATH;
+            var segs = (location.pathname || '/').split('/').filter(Boolean);
+            return segs.length ? ('/' + segs[0]) : '';
+          })();
+          window.location.href = base + '/index.php?loginRequired=1';
+        }
+        return;
+      }
       var cart = readCart();
-      // merge by id if present
       var idx = -1; if (product && product.id){ idx = cart.findIndex(function(i){ return i.id == product.id; }); }
       if (idx > -1){ cart[idx].qty = (cart[idx].qty||1) + (product.qty||1); }
       else { cart.push({ id: product.id, title: product.title, price: product.price, image: product.image, description: product.description, qty: product.qty||1 }); }
@@ -100,6 +107,5 @@
     _read: readCart
   };
 
-  // init
   $(document).ready(function(){ render(); });
 })(window.jQuery);

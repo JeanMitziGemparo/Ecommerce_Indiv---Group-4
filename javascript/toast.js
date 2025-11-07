@@ -1,4 +1,3 @@
-// toast.js - lightweight toast helper (jQuery)
 (function($){
   'use strict';
   function ensureContainer(){
@@ -35,7 +34,7 @@
     t.style.transform = 'translateY(8px)';
     t.innerText = msg || '';
     container.appendChild(t);
-    // show
+
     requestAnimationFrame(function(){ t.style.opacity = '1'; t.style.transform = 'translateY(0)'; });
     var duration = (opts.duration && Number(opts.duration)) || 2200;
     var timeout = setTimeout(function(){ hide(); }, duration);
@@ -44,7 +43,7 @@
       t.style.opacity = '0'; t.style.transform = 'translateY(8px)';
       setTimeout(function(){ try{ container.removeChild(t); }catch(e){} }, 260);
     }
-    // allow click to dismiss
+
     $(t).off('click').on('click', hide);
     return { hide: hide };
   }

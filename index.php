@@ -7,11 +7,10 @@
 
   <!-- Bootstrap CSS (comment out to see plain HTML) -->
   <link href="./dist/styles.css" rel="stylesheet">
-  <!-- modal styles moved to styles.css -->
 <body>
 
   <!-- NAVBAR -->
-  <?php include 'header.php'; ?>
+  <?php include __DIR__ . '/includes/header.php'; ?>
 
 
   <!-- HERO -->
@@ -101,7 +100,7 @@
   </section>
 
   <!-- FOOTER -->
-  <?php include 'footer.php'; ?>
+  <?php include __DIR__ . '/includes/footer.php'; ?>
 
 </body>
 </html>
@@ -215,7 +214,6 @@
   </div>
 </div>
 
-<!-- login-ui is loaded below with other scripts -->
 <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -245,8 +243,7 @@
     </div>
   </div>
 </div>
-<!-- comfirmation modal -->
-<!-- jQuery and jQuery Validation -->
+
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.21.0/dist/jquery.validate.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -265,9 +262,6 @@
     </div>
   </div>
 </div>
-
-
-
 
 
 <script src="./javascript/toast.js"></script>
@@ -296,8 +290,6 @@
 </script>
 
 
-
-<!-- Product view modal (used by main product grid) -->
 <div class="modal fade" id="productViewModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">

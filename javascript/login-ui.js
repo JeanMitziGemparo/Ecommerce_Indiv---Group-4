@@ -1,8 +1,5 @@
-// login-ui.js - handles the login & signup modal behavior with jQuery validation
 (function($){
   'use strict';
-
-  // helper: safely get jQuery and return early if missing
   if (typeof $ === 'undefined') return;
 
   
@@ -19,7 +16,6 @@
     }, 1800);
   }
 
-  // Custom validation methods for jQuery validation
   $.validator.addMethod("philippineMobile", function(value, element) {
     var digits = value.replace(/\D/g, '');
     return this.optional(element) || /^09\d{9}$/.test(digits);
@@ -53,7 +49,6 @@
     var $form = $('#loginForm');
     if (!$form.length) return;
 
-    // Initialize jQuery validation for login form
     $form.validate({
       rules: {
         username: {
@@ -81,7 +76,6 @@
       errorPlacement: function(error, element) {
         error.addClass('invalid-feedback d-block');
         element.addClass('is-invalid');
-        // Prefer appending to the nearest field wrapper to avoid collapsing inputs
         var $wrapper = element.closest('.mb-3, .col-md-6, .form-group');
         if ($wrapper.length) {
           $wrapper.append(error);
@@ -150,11 +144,9 @@
       });
     }
 
-    // Force digits only
     var $contactInput = $('#signupContact');
     if ($contactInput.length){ $contactInput.on('input', function(){ var d = $(this).val().replace(/\D/g,''); $(this).val(d); }); }
 
-    // Password toggle
     function togglePasswordField($button){ if (!$button || !$button.length) return; var targetId = $button.data('target'); if (!targetId) return; var $input = $('#' + targetId); if (!$input.length) return; if ($input.attr('type') === 'password'){ $input.attr('type','text'); $button.attr('aria-label','Hide password'); $button.html('<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a20.3 20.3 0 0 1 5.06-5.94"/><path d="M1 1l22 22"/></svg>'); } else { $input.attr('type','password'); $button.attr('aria-label','Show password'); $button.html('<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>'); } }
 
     $('.password-toggle').off('click').on('click', function(e){ e.preventDefault(); togglePasswordField($(this)); });
@@ -231,7 +223,6 @@
       errorPlacement: function(error, element) {
         error.addClass('invalid-feedback d-block');
         element.addClass('is-invalid');
-        // Prefer appending to the nearest field wrapper to keep layout intact
         var $wrapper = element.closest('.mb-3, .col-md-6, .form-group');
         if ($wrapper.length) {
           $wrapper.append(error);
@@ -264,7 +255,6 @@
         $.ajax({ url: 'api/signup.php', method: 'POST', contentType: 'application/json', data: JSON.stringify(payload) })
           .done(function(json){
             try{ var bs = bootstrap.Modal.getInstance($signupModal[0]); if (bs) bs.hide(); }catch(e){}
-            // attempt auto-login
             $.ajax({ url: 'api/login.php', method: 'POST', contentType: 'application/json', data: JSON.stringify({ email: email, password: password }) })
               .done(function(loginJson){
                 try{
@@ -284,7 +274,7 @@
             console.error('Signup failed', err);
             alert('Signup failed: ' + (err.responseJSON && err.responseJSON.error ? err.responseJSON.error : 'Server error'));
           });
-        return false; // Prevent default form submission
+        return false;
       }
     });
   });
